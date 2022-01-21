@@ -37,9 +37,6 @@ exports.login = (req, res)=>{
 };
 
 exports.logout = (req, res)=>{
-  req.body.username
-  req.body.password
-  req.body.token
   users.forEach(element => {
     if(element.username == req.body.username && 
       element.password == req.body.password){
