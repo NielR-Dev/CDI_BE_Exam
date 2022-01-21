@@ -1,4 +1,5 @@
 const res = require('express/lib/response');
+const req = require('express/lib/request');
 const jwt = require('jsonwebtoken');
 
 var  users = [
@@ -18,7 +19,7 @@ var  users = [
   }
 ]
 function generateToken(username) {
-  return jwt.sign(username, "09f26e402586e2faa8da4c98a35f1b20d6b033c60", { expiresIn: '3600s' });
+  return jwt.sign(username, "09f26e402586e2faa8da4c98a35f1b20d6b033c60");
 }
 
 exports.getUsers = (req, res)=>{
@@ -33,13 +34,10 @@ exports.login = (req, res)=>{
       user = element;
     }
   });
-  res.json(user);
+  res.json(user.token||"");
 };
 
 exports.logout = (req, res)=>{
-  req.body.username
-  req.body.password
-  req.body.token
   users.forEach(element => {
     if(element.username == req.body.username && 
       element.password == req.body.password){
@@ -52,9 +50,12 @@ exports.logout = (req, res)=>{
 
 exports.register = (req, res)=>{
   users.push({
-    id:1,
+    id:users.length+1,
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    token:"",
+    logged:""
   });
-  res.json(req.body);
+  res.status(200);
+  res.json(users);
 };
