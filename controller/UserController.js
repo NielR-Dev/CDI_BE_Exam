@@ -54,7 +54,9 @@ exports.register = (req, res)=>{
   users.push({
     id:1,
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    token:"",  
+    logged:""
   });
   res.json(req.body);
 };
