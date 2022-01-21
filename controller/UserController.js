@@ -8,14 +8,14 @@ var  users = [
     username: "johndoe",
     password: "pass12345",
     token: "",
-    logged: ""
+    logged: false
   },
   {
     id: 2,
     username: "juandelacruz",
     password: "matapangako",
     token: "",
-    logged: ""
+    logged: false
   }
 ]
 function generateToken(username) {
@@ -31,6 +31,7 @@ exports.login = (req, res)=>{
     if(element.username == req.body.username && 
       element.password == req.body.password){
       element.token = generateToken(element.username);
+      element.logged=true;
       user = element;
     }
   });
@@ -42,10 +43,11 @@ exports.logout = (req, res)=>{
     if(element.username == req.body.username && 
       element.password == req.body.password){
       element.token = "";
+      element.logged = false;
     }
   });
   res.status(200);
-  res.send("ok");
+  res.send("logged out");
 };
 
 exports.register = (req, res)=>{
@@ -54,7 +56,7 @@ exports.register = (req, res)=>{
     username: req.body.username,
     password: req.body.password,
     token:"",
-    logged:""
+    logged:false
   });
   res.status(200);
   res.json(users);
